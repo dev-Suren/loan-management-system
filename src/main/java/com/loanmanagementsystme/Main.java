@@ -1,21 +1,13 @@
 package com.loanmanagementsystme;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
+
+import com.loanmanagementsystme.inputinformation.InputDetailsCheckers;
+
+import java.io.IOException;
 
 public class Main {
-    public static void main(String[] args) {
-        //System.out.println("Hello world!");
-        Collection c;
-        c = new ArrayList();
-        System.out.println(c.getClass().getName());
-        for(int i= 1; i<=10;i++){
-            c.add(i+"*"+i+" = "+i*i);
-        }
-        Iterator iter = c.iterator();
-        while(iter.hasNext()){
-            System.out.println(iter.next());
-        }
+    public static void main(String[] args) throws IOException {
+        InputDetailsCheckers inputDetailsCheckers =new InputDetailsCheckers();
+        inputDetailsCheckers.checkDetails();
     }
 }

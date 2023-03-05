@@ -6,8 +6,6 @@ import java.io.InputStreamReader;
 import java.util.regex.Pattern;
 
 public class InputDetailsCheckers{
-    private boolean validNumber=true;
-    private boolean validName = true;
     /*This checkDetails methos check every details like phone number
      Name and so and store it in object*/
     public LoanDetails checkDetails()throws IOException {
@@ -15,36 +13,55 @@ public class InputDetailsCheckers{
         String phoneMessage = "Please input phone numbers with country code(+91)";
         //Creating objects of LoanDetails
         LoanDetails details = new LoanDetails();
+        //taking input using bufferReader.
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-
-        while(validName){
+        Validator validateName = (String inputs) -> Pattern.matches("([A-Z][a-z]{3,} )([A-Z][a-z]{3,} )?([A-Z][a-z]{3,})",inputs);
+        while(true){
             System.out.println(message);
-            String pattern ="([A-Z][a-z]{3,} )([A-Z][a-z]{3,} )?([A-Z][a-z]{3,})";
             String name = bufferedReader.readLine();
-            if(Pattern.matches(pattern,name)) {
+            if(validateName.validator(name)) {
                 details.setFullName(name);
-                validName = false;
+                break;
             }
             message = "Please state your name correctly";
+
         }
-        while(validNumber){
+        Validator validatePhone = (String input) -> Pattern.matches("((\\+*)((0[ -]*)*|(('+'91 )*))((\\d{12})+|(\\d{10})+))|\\d{5}([- ]*)\\d{6}",input);
+        while(true){
             System.out.println(phoneMessage);
-            String pattern = "((\\+*)((0[ -]*)*|(('+'91 )*))((\\d{12})+|(\\d{10})+))|\\d{5}([- ]*)\\d{6}";
             String phone = bufferedReader.readLine();
-            if(Pattern.matches(pattern,phone)){
+            if(validatePhone.validator(phone)){
                 details.setPhoneNumber(phone);
-                validNumber = false;
+                break;
             }
             phoneMessage = "Please input your number correctly";
         }
-
-//        while(){
-//        }
-
-
-
-
-
+        while(true){
+            System.out.println("Please mention your income per year here");
+            int income = Integer.parseInt(bufferedReader.readLine());
+            if(income>10_00_00){
+                details.setIncomePerYear(income);
+                break;
+            }
+        }
+        Validator addressValidator = (String inputs)->Pattern.matches("^[#.0-9a-zA-Z\\s,-]+$",inputs);
+        while(true){
+            System.out.println("Please input your address here(Format: #1, Delhi Highway, Phawara - 114411 )");
+            String address = bufferedReader.readLine();
+            if(addressValidator.validator(address)){
+                details.setFullAddress(address);
+                break;
+            }
+        }
+        Validator emailValidator = (String input) -> Pattern.matches("^[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*@[a-zA-Z0-9]+(?:\\.[a-zA-Z0-9]+)*$",input);
+        while(true){
+            System.out.println("please input your email address here");
+            String email = bufferedReader.readLine();
+            if(emailValidator.validator(email)){
+                details.setEmail(email);
+                break;
+            }
+        }
         return details ;
 
     }

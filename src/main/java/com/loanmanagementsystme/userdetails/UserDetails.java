@@ -8,6 +8,19 @@ public class UserDetails {
     private String fullAddress;
     private String email;
 
+    public UserDetails(int ID, String fullName, String phoneNumber, double incomePerYear, String fullAddress, String email) {
+        this.ID = ID;
+        this.fullName = fullName;
+        this.phoneNumber = phoneNumber;
+        this.incomePerYear = incomePerYear;
+        this.fullAddress = fullAddress;
+        this.email = email;
+    }
+//Constructor Overloading
+    public UserDetails() {
+
+    }
+
     public String getEmail() {
         return email;
     }

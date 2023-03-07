@@ -40,7 +40,7 @@ public class InputDetailsCheckers{
         }
         while(true){
             System.out.println("Please mention your income per year here");
-            int income = Integer.parseInt(bufferedReader.readLine());
+            long income = Integer.parseInt(bufferedReader.readLine());
             if(income>10_00_00){
                 details.setIncomePerYear(income);
                 break;

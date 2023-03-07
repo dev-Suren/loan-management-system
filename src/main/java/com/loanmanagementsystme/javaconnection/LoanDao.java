@@ -1,4 +1,6 @@
 package com.loanmanagementsystme.javaconnection;
+import com.loanmanagementsystme.userdetails.LoanDetails;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,4 +33,14 @@ public class LoanDao {
         }
         return bool;
     }
+
+    public void inputValues(LoanDetails details){
+        Connection con;
+        try{
+            con = DatabaseConnection.connections();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
 }

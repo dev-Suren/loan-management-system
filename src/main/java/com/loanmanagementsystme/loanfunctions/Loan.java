@@ -1,9 +1,9 @@
 package com.loanmanagementsystme.loanfunctions;
 
 public interface Loan {
-    double personalLoan(double totalLoan);
-    double personalLoan(double totalLoan,double tenure);
-    double commercialLoan(double totalLoan, double tenure);
-    double studentLaon(double totalLoan, double tenure);
-    double mortgageLoan(double totalLoan, double tenure);
+    void personalLoan(double totalLoan);
+    void  personalLoan(double totalLoan,double tenure);
+    void commercialLoan(double totalLoan, double tenure);
+    void studentLaon(double totalLoan, double tenure);
+    void mortgageLoan(double totalLoan, double tenure);
 }

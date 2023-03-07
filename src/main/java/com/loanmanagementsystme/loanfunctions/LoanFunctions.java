@@ -31,7 +31,7 @@ public class LoanFunctions implements Loan {
         return 0;
     }
 
-    private double EMI(double totlaLaon, double percentage,double tenure){
-        return totlaLaon *(percentage/100)*tenure;
+    private double EMI(double totlaLaon, double ARP,double tenure){
+        return totlaLaon *(ARP/100)*(tenure*12);
     }
 }

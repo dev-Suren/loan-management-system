@@ -1,12 +1,14 @@
 package com.loanmanagementsystme.inputinformation;
+import com.loanmanagementsystme.javaconnection.LoanDao;
 import com.loanmanagementsystme.userdetails.LoanDetails;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 public class InputDetailsCheckers{
-    /*This checkDetails methos check every details like phone number
+    /*This checkDetails method check every details like phone number
      Name and so and store it in object*/
     public LoanDetails checkDetails()throws IOException {
         String message="Please State your Full name Here";
@@ -46,7 +48,7 @@ public class InputDetailsCheckers{
         }
         Validator addressValidator = (String inputs)->Pattern.matches("^[#.0-9a-zA-Z\\s,-]+$",inputs);
         while(true){
-            System.out.println("Please input your address here(Format: #1, Delhi Highway, Phawara - 114411 )");
+            System.out.println("Please input your address here(Format: #1, Delhi Highway, Phagwara - 114411 )");
             String address = bufferedReader.readLine();
             if(addressValidator.validator(address)){
                 details.setFullAddress(address);
@@ -62,7 +64,19 @@ public class InputDetailsCheckers{
                 break;
             }
         }
+        while(true){
+            int key = createLoanId();
+            LoanDao loanDao = new LoanDao();
+            if(loanDao.checkPrimaryKey(key)){
+                details.setID(key);
+                break;
+            }
+        }
         return details ;
+    }
 
+    private int createLoanId(){
+        Random random = new Random();
+        return random.nextInt(10000,100000);
     }
 }

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public class Main {
     public static void main(String[] args) throws IOException, SQLException {
         LoanFunctions loanFunctions = new LoanFunctions();
-        loanFunctions.personalLoan(600000);
+        loanFunctions.commercialLoan(800000,5);
 
     }
 

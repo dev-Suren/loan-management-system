@@ -6,28 +6,12 @@ import com.loanmanagementsystme.userdetails.LoanDetails;
 import java.io.IOException;
 
 public class LoanFunctions implements Loan {
-    private LoanDao inputs= new LoanDao();
-
-
     @Override
     public void personalLoan(double totalLoan){
         final int ARP = 8;
         final String loanType = "Personal Loan";
-        try{
-            double EMI = EMI(totalLoan,ARP,1);
-            getLoanDetailsObject().setLonaType(loanType);
-            getLoanDetailsObject().setPercentage(ARP);
-            getLoanDetailsObject().setEMI(EMI);
-            getLoanDetailsObject().setTotalAmount(totalLoan);
-            inputs.inputValues(getLoanDetailsObject(),1);
-            LoanInvoice.invoie(getLoanDetailsObject());
-
-
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-
-
+        double EMI = EMI(totalLoan,ARP,1);
+        performFunction(loanType,ARP,EMI,totalLoan,1);
     }
 
 
@@ -35,35 +19,16 @@ public class LoanFunctions implements Loan {
     public void commercialLoan(double totalLoan, int tenure) {
         final int ARP = 12;
         final String loanType = "Commercial Loan";
-        try{
-            double EMI = EMI(totalLoan,ARP,tenure);
-            getLoanDetailsObject().setLonaType(loanType);
-            getLoanDetailsObject().setPercentage(ARP);
-            getLoanDetailsObject().setEMI(EMI);
-            getLoanDetailsObject().setTotalAmount(totalLoan);
-            inputs.inputValues(getLoanDetailsObject(),tenure);
-            LoanInvoice.invoie(getLoanDetailsObject());
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-
+        double EMI = EMI(totalLoan,ARP,tenure);
+        performFunction(loanType,ARP,EMI,totalLoan,tenure);
     }
 
     @Override
     public void studentLaon(double totalLoan, int tenure) {
         final int ARP = 6;
         final String loanType = "Student Loan";
-        try{
-            double EMI = EMI(totalLoan,ARP,tenure);
-            getLoanDetailsObject().setLonaType(loanType);
-            getLoanDetailsObject().setPercentage(ARP);
-            getLoanDetailsObject().setEMI(EMI);
-            getLoanDetailsObject().setTotalAmount(totalLoan);
-            inputs.inputValues(getLoanDetailsObject(),tenure);
-            LoanInvoice.invoie(getLoanDetailsObject());
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+        double EMI = EMI(totalLoan,ARP,tenure);
+        performFunction(loanType,ARP,EMI,totalLoan,tenure);
 
     }
 
@@ -71,28 +36,39 @@ public class LoanFunctions implements Loan {
     public void mortgageLoan(double totalLoan, int tenure) {
         final int ARP = 5;
         final String loanType = "Mortgage Loan";
+        double EMI = EMI(totalLoan,ARP,tenure);
+        performFunction(loanType,ARP,EMI,totalLoan,tenure);
+
+
+    }
+
+    private double EMI(double totlaLaon, double ARP,double tenure){
+        ARP = ARP/(12*100);
+        tenure = tenure * 12;
+        return (totlaLaon *ARP*Math.pow(1+ARP,tenure))/(Math.pow(1+ARP,tenure-1));
+    }
+
+//    private LoanDetails getLoanDetailsObject()throws IOException{
+//        InputDetailsCheckers inputDetailsCheckers = new InputDetailsCheckers();
+//        return inputDetailsCheckers.checkDetails();
+//    }
+
+    private void performFunction(String loanType,int ARP,double EMI,double totalLoan,int tenure){
+
+        LoanDao inputs= new LoanDao();
         try{
-            double EMI = EMI(totalLoan,ARP,tenure);
-            getLoanDetailsObject().setLonaType(loanType);
-            getLoanDetailsObject().setPercentage(ARP);
-            getLoanDetailsObject().setEMI(EMI);
-            getLoanDetailsObject().setTotalAmount(totalLoan);
-            inputs.inputValues(getLoanDetailsObject(),tenure);
-            LoanInvoice.invoie(getLoanDetailsObject());
+            InputDetailsCheckers inputDetailsCheckers = new InputDetailsCheckers();
+            LoanDetails details = inputDetailsCheckers.checkDetails();
+            details.setLonaType(loanType);
+            details.setPercentage(ARP);
+            details.setEMI(EMI);
+            details.setTotalAmount(totalLoan);
+            inputs.inputValues(details,tenure);
+            LoanInvoice.invoie(details);
         }catch (IOException e){
             e.printStackTrace();
         }
 
     }
 
-    private double EMI(double totlaLaon, double ARP,double tenure){
-        ARP = ARP/(12*100);
-         tenure = tenure * 12;
-        return (totlaLaon *ARP*Math.pow(1+ARP,tenure))/(Math.pow(1+ARP,tenure-1));
-    }
-
-    private LoanDetails getLoanDetailsObject()throws IOException{
-        InputDetailsCheckers inputDetailsCheckers = new InputDetailsCheckers();
-        return inputDetailsCheckers.checkDetails();
-    }
 }

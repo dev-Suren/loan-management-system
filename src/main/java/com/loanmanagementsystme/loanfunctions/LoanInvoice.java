@@ -1,5 +1,4 @@
 package com.loanmanagementsystme.loanfunctions;
-
 import com.loanmanagementsystme.userdetails.LoanDetails;
 
 public class LoanInvoice {

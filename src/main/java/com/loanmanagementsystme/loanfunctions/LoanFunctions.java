@@ -20,6 +20,7 @@ public class LoanFunctions implements Loan {
         final int ARP = 12;
         final String loanType = "Commercial Loan";
         double EMI = EMI(totalLoan,ARP,tenure);
+        //double EMI1 = EMI(totalLoan,ARP,tenure)->
         performFunction(loanType,ARP,EMI,totalLoan,tenure);
     }
 
@@ -37,6 +38,7 @@ public class LoanFunctions implements Loan {
         final int ARP = 5;
         final String loanType = "Mortgage Loan";
         double EMI = EMI(totalLoan,ARP,tenure);
+
         performFunction(loanType,ARP,EMI,totalLoan,tenure);
 
 
@@ -47,12 +49,6 @@ public class LoanFunctions implements Loan {
         tenure = tenure * 12;
         return (totlaLaon *ARP*Math.pow(1+ARP,tenure))/(Math.pow(1+ARP,tenure-1));
     }
-
-//    private LoanDetails getLoanDetailsObject()throws IOException{
-//        InputDetailsCheckers inputDetailsCheckers = new InputDetailsCheckers();
-//        return inputDetailsCheckers.checkDetails();
-//    }
-
     private void performFunction(String loanType,int ARP,double EMI,double totalLoan,int tenure){
 
         LoanDao inputs= new LoanDao();
